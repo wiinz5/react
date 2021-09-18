@@ -47,8 +47,8 @@ export class Point extends Component{
                     <thead>
                         <tr>
                             <th>Point ID</th>
-                            <th>Subjects ID</th>
-                            <th>Student ID</th>
+                            <th>Subjects Name</th>
+                            <th>Student Name</th>
                             <th>Midterm Point</th>
                             <th>Final Point</th>
                             <th>Total</th>
@@ -59,8 +59,8 @@ export class Point extends Component{
                         {pois.map(poi=>
                             <tr key={poi.PointId}>
                                 <td>{poi.PointId}</td>
-                                <td>{poi.SubjectsId}</td>
-                                <td>{poi.StudentId}</td>
+                                <td>{poi.SubjectsName}</td>
+                                <td>{poi.StudentName}</td>
                                 <td>{poi.Midterm}</td>
                                 <td>{poi.Final}</td>
                                 <td>{poi.Total}</td>
@@ -68,7 +68,7 @@ export class Point extends Component{
 <ButtonToolbar>
     <Button className="mr-2" variant="info"
     onClick={()=>this.setState({editModalShow:true,
-        poiid:poi.PointId,poisub:poi.SubjectsId,poistu:poi.StudentId,
+        poiid:poi.PointId,poisub:poi.SubjectsName,poistu:poi.StudentName,
         poimid:poi.Midterm,poifinal:poi.Final,poitotal:poi.Total})}>
             Edit
         </Button>

@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {Modal,Button, Row, Col, Form} from 'react-bootstrap';
 
-export class AddSubjectsModal extends Component{
+export class AddHubminModal extends Component{
     constructor(props){
         super(props);
         this.handleSubmit=this.handleSubmit.bind(this);
@@ -9,23 +9,21 @@ export class AddSubjectsModal extends Component{
 
     handleSubmit(event){
         event.preventDefault();
-        fetch(process.env.REACT_APP_API+'subjects',{
+        fetch(process.env.REACT_APP_API+'hubmin',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
                 'Content-Type':'application/json'
             },
             body:JSON.stringify({
-                SubjectsName:event.target.SubjectsName.value,
-                TeacherName:event.target.TeacherName.value
+                Username:event.target.Username.value,
+                Password:event.target.Password.value,
+                Status:event.target.Status.value
             })
         })
         .then(res=>res.json())
         .then((result)=>{
             alert(result);
-        },
-        (error)=>{
-            alert('Failed');
         })
     }
     render(){
@@ -40,7 +38,7 @@ centered
 >
     <Modal.Header clooseButton>
         <Modal.Title id="contained-modal-title-vcenter">
-            Add Subjects
+            Add User
         </Modal.Title>
     </Modal.Header>
     <Modal.Body>
@@ -48,21 +46,27 @@ centered
         <Row>
             <Col sm={6}>
                 <Form onSubmit={this.handleSubmit}>
-                    <Form.Group controlId="SubjectsName">
-                        <Form.Label>Subjects Name</Form.Label>
-                        <Form.Control type="text" name="SubjectsName" required 
-                        placeholder="Subjects Name"/>
+                    <Form.Group controlId="Username">
+                        <Form.Label>User Name</Form.Label>
+                        <Form.Control type="text" name="Username" required 
+                        placeholder="User Name"/>
                     </Form.Group>
 
-                    <Form.Group controlId="TeacherName">
-                        <Form.Label>Teacher Name</Form.Label>
-                        <Form.Control type="text" name="TeacherName" required 
-                        placeholder="Teacher Name"/>
+                    <Form.Group controlId="Password">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control type="password" name="Password" required 
+                        placeholder="Password"/>
+                    </Form.Group>
+                    
+                    <Form.Group controlId="Status">
+                        <Form.Label>Authorities</Form.Label>
+                        <Form.Control type="text" name="Status" required 
+                        placeholder="Authorities"/>
                     </Form.Group>
 
                     <Form.Group>
                         <Button variant="primary" type="submit" onClick={this.props.onHide}>
-                            Add Subjects
+                            Add User
                         </Button>
                     </Form.Group>
                 </Form>

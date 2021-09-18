@@ -64,7 +64,7 @@ centered
                     </Form.Group>
 
                     <Form.Group>
-                        <Button variant="primary" type="submit">
+                        <Button variant="primary" type="submit" onClick={this.props.onHide}>
                             Update Class
                         </Button>
                     </Form.Group>

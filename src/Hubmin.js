@@ -1,22 +1,21 @@
 import React,{Component} from 'react';
 import {Table} from 'react-bootstrap';
-
 import {Button,ButtonToolbar} from 'react-bootstrap';
-import {AddStudentModal} from './AddStudentModal';
-import {EditStudentModal} from './EditStudentModal';
+import {EditHubminModal} from './EditHubminModal';
+import {AddHubminModal} from './AddHubminModal';
 
-export class Student extends Component{
+export class Hubmin extends Component{
 
     constructor(props){
         super(props);
-        this.state={stus:[], addModalShow:false, editModalShow:false}
+        this.state={hubs:[], addModalShow:false, editModalShow:false}
     }
 
     refreshList(){
-        fetch(process.env.REACT_APP_API+'student')
+        fetch(process.env.REACT_APP_API+'hubmin')
         .then(response=>response.json())
         .then(data=>{
-            this.setState({stus:data});
+            this.setState({hubs:data});
         });
     }
 
@@ -28,9 +27,9 @@ export class Student extends Component{
         this.refreshList();
     }
 
-    deleteStu(stuid){
+    deleteHub(hubuser){
         if(window.confirm('Are you sure?')){
-            fetch(process.env.REACT_APP_API+'student/'+stuid,{
+            fetch(process.env.REACT_APP_API+'hubmin/'+hubuser,{
                 method:'DELETE',
                 header:{'Accept':'application/json',
             'Content-Type':'application/json'}
@@ -38,49 +37,41 @@ export class Student extends Component{
         }
     }
     render(){
-        const {stus, stuid,stuname,classname,photofilename,dob}=this.state;
+        const {hubs, hubuser,hubpass,status}=this.state;
         let addModalClose=()=>this.setState({addModalShow:false});
         let editModalClose=()=>this.setState({editModalShow:false});
         return(
-            <div>
+            <div >
                 <Table className="mt-4" striped bordered hover size="sm">
                     <thead>
                         <tr>
-                            <th>Student ID</th>
-                            <th>Student Name</th>
-                            <th>Class Name</th>
-                            <th>DOB</th>
-                            <th>Options</th>
+                            <th>User Name</th>
+                            <th>Authorities</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {stus.map(stu=>
-                            <tr key={stu.StudentId}>
-                                <td>{stu.StudentId}</td>
-                                <td>{stu.StudentName}</td>
-                                <td>{stu.ClassName}</td>
-                                <td>{stu.DateOfBirth}</td>
+                        {hubs.map(hub=>
+                            <tr key={hub.Username}>
+                                <td>{hub.Username}</td>
+                                <td>{hub.Status}</td>
                                 <td>
 <ButtonToolbar>
     <Button className="mr-2" variant="info"
     onClick={()=>this.setState({editModalShow:true,
-        stuid:stu.StudentId,stuname:stu.StudentName,classname:stu.ClassName,
-        photofilename:stu.PhotoFileName,dob:stu.DateOfBirth})}>
+        hubuser:hub.Username,hubpass:hub.Password,status:hub.Status})}>
             Edit
         </Button>
 
         <Button className="mr-2" variant="danger"
-    onClick={()=>this.deleteStu(stu.StudentId)}>
+    onClick={()=>this.deleteHub(hub.Username)}>
             Delete
         </Button>
 
-        <EditStudentModal show={this.state.editModalShow}
+        <EditHubminModal show={this.state.editModalShow}
         onHide={editModalClose}
-        stuid={stuid}
-        stuname={stuname}
-        classname={classname}
-        photofilename={photofilename}
-        dob={dob}
+        hubuser={hubuser}
+        hubpass={hubpass}
+        status={status}
         />
 </ButtonToolbar>
 
@@ -94,9 +85,9 @@ export class Student extends Component{
                 <ButtonToolbar>
                     <Button variant='primary'
                     onClick={()=>this.setState({addModalShow:true})}>
-                    Add Student</Button>
+                    Add User</Button>
 
-                    <AddStudentModal show={this.state.addModalShow}
+                    <AddHubminModal show={this.state.addModalShow}
                     onHide={addModalClose}/>
                 </ButtonToolbar>
             </div>

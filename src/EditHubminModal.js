@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {Modal,Button, Row, Col, Form} from 'react-bootstrap';
 
-export class AddSubjectsModal extends Component{
+export class EditHubminModal extends Component{
     constructor(props){
         super(props);
         this.handleSubmit=this.handleSubmit.bind(this);
@@ -9,15 +9,16 @@ export class AddSubjectsModal extends Component{
 
     handleSubmit(event){
         event.preventDefault();
-        fetch(process.env.REACT_APP_API+'subjects',{
-            method:'POST',
+        fetch(process.env.REACT_APP_API+'hubmin',{
+            method:'PUT',
             headers:{
                 'Accept':'application/json',
                 'Content-Type':'application/json'
             },
             body:JSON.stringify({
-                SubjectsName:event.target.SubjectsName.value,
-                TeacherName:event.target.TeacherName.value
+                Username:event.target.Username.value,
+                Password:event.target.Password.value,
+                Status:event.target.Status.value
             })
         })
         .then(res=>res.json())
@@ -28,6 +29,7 @@ export class AddSubjectsModal extends Component{
             alert('Failed');
         })
     }
+
     render(){
         return (
             <div className="container">
@@ -40,29 +42,38 @@ centered
 >
     <Modal.Header clooseButton>
         <Modal.Title id="contained-modal-title-vcenter">
-            Add Subjects
+            Edit User
         </Modal.Title>
     </Modal.Header>
     <Modal.Body>
 
-        <Row>
+    <Row>
             <Col sm={6}>
                 <Form onSubmit={this.handleSubmit}>
-                    <Form.Group controlId="SubjectsName">
-                        <Form.Label>Subjects Name</Form.Label>
-                        <Form.Control type="text" name="SubjectsName" required 
-                        placeholder="Subjects Name"/>
+                <Form.Group controlId="Username">
+                        <Form.Label>User Name</Form.Label>
+                        <Form.Control type="text" name="Username" required disabled
+                        defaultValue={this.props.hubuser} 
+                        placeholder="User Name"/>
                     </Form.Group>
 
-                    <Form.Group controlId="TeacherName">
-                        <Form.Label>Teacher Name</Form.Label>
-                        <Form.Control type="text" name="TeacherName" required 
-                        placeholder="Teacher Name"/>
+                    <Form.Group controlId="Password">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control type="password" name="Password" required 
+                        defaultValue={this.props.hubpass}
+                        placeholder="Password"/>
+                    </Form.Group>
+
+                    <Form.Group controlId="Status">
+                        <Form.Label>Authorities</Form.Label>
+                        <Form.Control type="text" name="Status" required 
+                        defaultValue={this.props.status}
+                        placeholder="Authorities"/>
                     </Form.Group>
 
                     <Form.Group>
                         <Button variant="primary" type="submit" onClick={this.props.onHide}>
-                            Add Subjects
+                            Update User
                         </Button>
                     </Form.Group>
                 </Form>
