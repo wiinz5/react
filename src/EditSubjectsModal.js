@@ -18,7 +18,6 @@ export class EditSubjectsModal extends Component{
             body:JSON.stringify({
                 SubjectsId:event.target.SubjectsId.value,
                 SubjectsName:event.target.SubjectsName.value,
-                TeacherName:event.target.TeacherName.value
             })
         })
         .then(res=>res.json())
